@@ -1,7 +1,5 @@
 Require Export D.
 
-
-
 (** **** Problem #2 : 1 star (zero_nbeq_plus_1) *)
 
 (* See the base file for the definition of [beq_nat] below. *)
@@ -9,6 +7,6 @@ Require Export D.
 Theorem zero_nbeq_plus_1 : forall n : nat,
   beq_nat 0 (n + 1) = false.
 Proof.
-  exact GIVEUP.
+intros. destruct n. reflexivity. reflexivity. 
 Qed.
 
