@@ -12,6 +12,11 @@ Theorem andb_eq_orb :
   (andb b c = orb b c) ->
   b = c.
 Proof.
-  exact GIVEUP.
+intros. destruct b. destruct c.
+reflexivity.
+symmetry. apply H.
+destruct c.
+apply H.
+reflexivity.
 Qed.
 

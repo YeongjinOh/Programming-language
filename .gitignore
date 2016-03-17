@@ -6,5 +6,4 @@
 _CoqProject
 Makefile.coq
 submission.zip
-*.v.d
-*.vo
+#*.v#

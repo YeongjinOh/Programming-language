@@ -19,8 +19,8 @@ Eval compute in 3+5*6.
 
 Fixpoint factorial (n:nat) : nat := 
 match n with
-| O => O
-| S n' => n * factorial n'
+| O => S O
+| S n' => n * (factorial n')
 end.
 
 Example test_factorial1:          (factorial 3) = 6.
