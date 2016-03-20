@@ -1,7 +1,4 @@
 Require Export D.
-
-
-
 (** **** Problem #1 : 1 star (andb3) *)
 (** Do the same for the [andb3] function below. This function should
     return [true] when all of its inputs are [true], and [false]
