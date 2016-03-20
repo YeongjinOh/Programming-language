@@ -10,6 +10,12 @@ Require Export D.
 
 Lemma double_plus : forall n, double n = n + n .
 Proof.  
-  exact GIVEUP.
+  intros. induction n. simpl. reflexivity.
+  simpl. rewrite -> IHn.
+  Lemma plus_Smn_mSn : forall m n:nat, S (m + n) = m + S n.
+  Proof.
+      intros. induction m. reflexivity.
+      simpl. rewrite -> IHm. reflexivity. Qed.
+  rewrite -> plus_Smn_mSn. reflexivity.
 Qed.
 

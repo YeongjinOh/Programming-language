@@ -10,6 +10,6 @@ Require Export D.
 Theorem plus_n_O : forall n : nat,
   n = n + 0.
 Proof. 
-  exact GIVEUP.
+  intros. induction n. reflexivity. simpl. rewrite <- IHn. reflexivity. 
 Qed.
 

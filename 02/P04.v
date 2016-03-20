@@ -5,6 +5,7 @@ Require Export D.
 Theorem plus_assoc : forall n m p : nat,
   n + (m + p) = (n + m) + p.
 Proof. 
-  exact GIVEUP.
+  intros. induction n. reflexivity.
+  simpl. rewrite -> IHn. reflexivity.
 Qed.
 
