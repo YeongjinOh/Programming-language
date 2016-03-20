@@ -7,6 +7,12 @@ Require Export D.
 Theorem mult_plus_distr_r : forall n m p : nat,
   (n + m) * p = (n * p) + (m * p).
 Proof.  
-  exact GIVEUP.
+  intros. induction n. simpl. reflexivity.
+  simpl. rewrite -> IHn.
+  Lemma plus_assoc : forall a b c : nat, a + (b + c) = (a + b) + c.
+  Proof. 
+      intros. induction a. reflexivity.
+      simpl. rewrite -> IHa. reflexivity. Qed.
+  rewrite -> plus_assoc. reflexivity.
 Qed.
 
