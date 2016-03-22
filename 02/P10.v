@@ -6,6 +6,6 @@ Require Export D.
 Theorem fst_swap_is_snd : forall (p : natprod),
   fst (swap_pair p) = snd p.
 Proof.  
-  exact GIVEUP.
+ intros. destruct p. reflexivity. 
 Qed.
 
