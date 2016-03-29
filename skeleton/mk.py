@@ -25,6 +25,7 @@ if __name__ == '__main__':
     write_file('D.v', problems[0])
 
     for i in range(1, len(problems)):
-        (problem, check) = problems[i].split(DELIMITER_CHECK)
-        write_file('P%02d.v' % i, PREAMBLE_PROBLEM + problem)
-        write_file('E%02d.v' % i, PREAMBLE_CHECK(i) + check)
+        problem_and_checks = problems[i].split(DELIMITER_CHECK)
+        write_file('P%02d.v' % i, PREAMBLE_PROBLEM + problem_and_checks[0])
+        for j in range(1, len(problem_and_checks)):
+            write_file('E%02d_%02d.v' % (i, j), PREAMBLE_CHECK(i) + problem_and_checks[j])
