@@ -11,6 +11,6 @@ Theorem silly_ex :
      evenb 3 = true ->
      oddb 4 = true.
 Proof.
-  exact GIVEUP.
+ intros. apply H. apply H0.
 Qed.
 
