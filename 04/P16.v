@@ -9,6 +9,6 @@ Example sillyex1 : forall (X : Type) (x y z : X) (l j : list X),
      y :: l = x :: j ->
      x = y.
 Proof.
-  exact GIVEUP.
+  intros. inversion H0. reflexivity.
 Qed.
 

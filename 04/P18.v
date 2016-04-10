@@ -9,6 +9,6 @@ Require Export D.
 Theorem beq_nat_0_l : forall n,
    beq_nat 0 n = true -> n = 0.
 Proof.
-  exact GIVEUP.
+  intros. induction n. reflexivity. inversion H.
 Qed.
 
