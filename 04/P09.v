@@ -10,6 +10,6 @@ Require Export D.
 Theorem override_example : forall (b:bool),
   (override (constfun b) 3 true) 2 = b.
 Proof.
-  exact GIVEUP.
+  reflexivity.
 Qed.
 

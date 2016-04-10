@@ -8,16 +8,19 @@ Require Export D.
     and complete the proofs below. *)
 
 Fixpoint repeat {X : Type} (n : X) (count : nat) : list X :=
-  GIVEUP.
+  match count with
+  | O => nil
+  | S m => n :: repeat n m
+  end.
 
 Example test_repeat1:
   repeat true 2 = cons true (cons true nil).
-Proof. exact GIVEUP. Qed.
+Proof. reflexivity. Qed.
 
 Theorem nil_app : forall X:Type, forall l:list X,
   app [] l = l.
 Proof.
-  exact GIVEUP.
+  reflexivity.
 Qed.
 
 Theorem snoc_with_append : forall X : Type,
@@ -25,6 +28,7 @@ Theorem snoc_with_append : forall X : Type,
                          forall v : X,
   snoc (l1 ++ l2) v = l1 ++ (snoc l2 v).
 Proof.
-  exact GIVEUP.
+  intros. induction l1. reflexivity.
+  simpl. rewrite -> IHl1. reflexivity.
 Qed.
 

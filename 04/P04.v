@@ -25,7 +25,9 @@ Print prod_curry.
 
 Definition prod_uncurry {X Y Z : Type}
   (f : X -> Y -> Z) (p : X * Y) : Z :=
-  GIVEUP.
+match p with
+|(x, y) => f x y
+end.
 
 (** (Thought exercise: before running these commands, can you
     calculate the types of [prod_curry] and [prod_uncurry]?) *)
@@ -35,18 +37,18 @@ Check @prod_uncurry.
 
 Example test_uncurry:
   prod_uncurry plus (3,7) = 10.
-Proof. exact GIVEUP. Qed.
+Proof. reflexivity. Qed.
 
 Theorem uncurry_curry : forall (X Y Z : Type) (f : X -> Y -> Z) x y,
   prod_curry (prod_uncurry f) x y = f x y.
 Proof.
-  exact GIVEUP.
+  intros. reflexivity.
 Qed.
 
 Theorem curry_uncurry : forall (X Y Z : Type)
                                (f : (X * Y) -> Z) (p : X * Y),
   prod_uncurry (prod_curry f) p = f p.
 Proof.
-  exact GIVEUP.
+  intros. destruct p. simpl. reflexivity.
 Qed.
 

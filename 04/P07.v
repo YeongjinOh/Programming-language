@@ -9,6 +9,11 @@ Require Export D.
 Theorem map_rev : forall (X Y : Type) (f : X -> Y) (l : list X),
   map f (rev l) = rev (map f l).
 Proof.
-  exact GIVEUP.
+  intros. induction l. reflexivity.
+  simpl. 
+  Lemma map_snoc_lemma : forall (X Y:Type) (f:X->Y) (x:X) (l:list X), map f (snoc l x) = snoc (map f l) (f x).
+  Proof. intros. induction l. reflexivity.
+    simpl. rewrite -> IHl. reflexivity. Qed.
+  rewrite -> map_snoc_lemma. rewrite -> IHl. reflexivity.
 Qed.
 

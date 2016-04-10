@@ -13,6 +13,7 @@ Print fold_map.
 Theorem fold_map_correct : forall (X Y:Type) (f : X -> Y) (l : list X),
   fold_map f l = map f l.
 Proof.
-  exact GIVEUP.
+  intros. unfold fold_map. induction l. reflexivity.
+  simpl. rewrite -> IHl. reflexivity.
 Qed.
 

@@ -8,7 +8,10 @@ Require Export D.
     passes the unit tests below. *)
 
 Definition hd_opt {X : Type} (l : list X)  : option X :=
-  GIVEUP.
+  match l with
+  | nil => None
+  | hd::tl => Some hd
+  end.
 
 (** Once again, to force the implicit arguments to be explicit,
     we can use [@] before the name of the function. *)
@@ -16,8 +19,8 @@ Definition hd_opt {X : Type} (l : list X)  : option X :=
 Check @hd_opt.
 
 Example test_hd_opt1 :  hd_opt [1;2] = Some 1.
-Proof. exact GIVEUP. Qed.
+Proof. reflexivity. Qed.
 
 Example test_hd_opt2 :   hd_opt  [[1];[2]]  = Some [1].
-Proof. exact GIVEUP. Qed.
+Proof. reflexivity. Qed.
 
