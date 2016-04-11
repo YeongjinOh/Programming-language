@@ -10,6 +10,17 @@ Theorem filter_exercise : forall (X : Type) (test : X -> bool)
      filter test l = x :: lf ->
      test x = true.
 Proof.
-  exact GIVEUP.
-Qed.
+ 
+    intros.
+    induction l.
+    {
+      inversion H.
+    }
+    {
+       destruct (test x0) eqn:a. inversion H. rewrite a in H1.
+       inversion H1.  rewrite <- a. rewrite H2. reflexivity.
+       inversion H. rewrite a in H1. apply IHl. apply H1.
+    }
+Qed. 
+  
 
