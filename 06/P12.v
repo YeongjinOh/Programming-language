@@ -8,7 +8,7 @@ Require Export D.
     practice exercises. *)
 
 Lemma le_trans : forall m n o, m <= n -> n <= o -> m <= o.
-Proof.
-  exact GIVEUP.
-Qed.
+ Proof. intros m n o Hmn Hno. induction Hno as [|n o]. 
+  Case "le_n". apply Hmn.
+  Case "le_S". apply le_S. apply IHHno. assumption. Qed.
 
