@@ -196,5 +196,32 @@ Proof. intros. destruct H.
     SCase "hd::tl". replace ((hd::tl)++ys) with (hd::(tl++ys)). 
       apply ai_later. assumption. reflexivity. Qed.
 
+Definition disjoint (X:Type) (l1 l2:list X) : Prop :=
+  forall (x:X), appears_in x (l1 ++ l2) -> (appears_in x l1 -> ~(appears_in x l2)) /\ (appears_in x l2 -> ~(appears_in x l1)).
+
+Example dis_ex : disjoint nat [1;2] [4;5].
+Proof. unfold disjoint. intros. split.
+  Case "left". intro H2. inversion H2. 
+    SCase "ai_here". unfold not. intro contra. inversion contra. inversion H4. inversion H7. 
+    SCase "ai_later". unfold not. intro contra. inversion H1. rewrite H5 in contra. inversion contra as [|n l' contra2]. inversion contra2. inversion H9.
+      inversion H5.
+  Case "right".  intro H2. inversion H2. 
+    SCase "ai_here". unfold not. intro contra. inversion contra. inversion H4. inversion H7. 
+    SCase "ai_later". unfold not. intro contra. inversion H1. rewrite H5 in contra. inversion contra as [|n l' contra2]. inversion contra2. inversion H9.
+      inversion H5. Qed.
+
+Inductive no_repeats (X:Type) : list X ->  Prop :=
+| nr_nil : no_repeats X []
+| nr_cons : forall hd tl, no_repeats X tl -> ~(appears_in hd tl) -> no_repeats X (hd::tl)
+.
+
+Inductive nostutter: list nat -> Prop :=
+| ns_nil : nostutter []
+| ns_single : forall n, nostutter [n]
+| ns_cons : forall x1 x2 tl, (x1<>x2) -> nostutter tl -> nostutter (x1::x2::tl)
+.
+Example nostutter_example_1 : nostutter [1;4;1].
+Proof. apply ns_cons. intros contra. inversion contra. apply ns_single. Qed.
+
 
 

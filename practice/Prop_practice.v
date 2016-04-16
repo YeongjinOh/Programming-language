@@ -98,6 +98,7 @@ Proof. intros. induction n as [|n']. apply le_n. apply le_S. assumption. Qed.
 
 
 (*********************************************************)
+Print le.
 Theorem n_le_m__Sn_le_Sm: forall n m, S n <= S m -> n <= m.
 Proof. intros. inversion H. apply le_n. apply le_trans with (m:=n) (n:=S n) (o:=m). apply le_S. apply le_n. apply H2.  
 Qed.
