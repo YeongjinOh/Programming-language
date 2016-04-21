@@ -11,5 +11,8 @@ Theorem not_exists_dist :
   forall (X:Type) (P : X -> Prop),
     ~ (exists x, ~ P x) -> (forall x, P x).
 Proof.
-  exact GIVEUP.
+  unfold excluded_middle. unfold not.
+  intros H X P H2 x. destruct H with (P:=P x).
+  Case "P". apply H0.
+  Case "~P". apply ex_falso_quodlibet. apply H2. exists x. assumption.
 Qed.

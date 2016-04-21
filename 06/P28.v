@@ -18,12 +18,21 @@ Inductive appears_in {X:Type} (a:X) : list X -> Prop :=
 Lemma appears_in_app : forall (X:Type) (xs ys : list X) (x:X), 
      appears_in x (xs ++ ys) -> appears_in x xs \/ appears_in x ys.
 Proof.
-  exact GIVEUP.
-Qed.
+ intros X xs. induction xs as [|hd tl].
+  Case "[]". intros. replace ([]++ys) with ys in H. right. assumption. reflexivity. 
+  Case "hd::tl". intros. inversion H.
+    SCase "ai_here". left. apply ai_here.
+    SCase "ai_later". apply IHtl in H1. destruct H1. left. apply ai_later. assumption. right. assumption. Qed.
 
 Lemma app_appears_in : forall (X:Type) (xs ys : list X) (x:X), 
      appears_in x xs \/ appears_in x ys -> appears_in x (xs ++ ys).
-Proof.
-  exact GIVEUP.
-Qed.
+Proof. intros. destruct H.
+  Case "left". induction xs as [|hd tl].
+    SCase "[]". inversion H.
+    SCase "hd::tl". replace ((hd::tl)++ys) with (hd::(tl++ys)).
+      inversion H. apply ai_here. apply ai_later. apply IHtl. assumption. reflexivity.
+  Case "right". induction xs as [|hd tl].
+    SCase "[]". simpl. assumption.
+    SCase "hd::tl". replace ((hd::tl)++ys) with (hd::(tl++ys)). 
+      apply ai_later. assumption. reflexivity. Qed.
 

@@ -15,7 +15,9 @@ Require Export D.
     does not stutter.) *)
 
 Inductive nostutter:  list nat -> Prop :=
- (* FILL IN HERE *)
+| ns_nil : nostutter []
+| ns_single : forall n, nostutter [n]
+| ns_cons : forall x1 x2 l, (x1<>x2) -> nostutter (x2::l) -> nostutter (x1::x2::l)
 .
 
 (** Make sure each of these tests succeeds, but you are free
@@ -31,25 +33,29 @@ Inductive nostutter:  list nat -> Prop :=
     tactics.  *)
 
 Example test_nostutter_1:      nostutter [3;1;4;1;5;6].
-Proof. exact GIVEUP. Qed.
+Proof. apply ns_cons. 
+  intro c. inversion c. apply ns_cons. intro c. inversion c. apply ns_cons. intro c. inversion c. apply ns_cons. intro c. inversion c. apply ns_cons. intro c. inversion c. apply ns_single. Qed.
+
 (* 
   Proof. repeat constructor; apply beq_nat_false; auto. Qed.
 *)
 
 Example test_nostutter_2:  nostutter [].
-Proof. exact GIVEUP. Qed.
+Proof. apply ns_nil. Qed.
 (* 
   Proof. repeat constructor; apply beq_nat_false; auto. Qed.
 *)
 
 Example test_nostutter_3:  nostutter [5].
-Proof. exact GIVEUP. Qed.
+Proof. apply ns_single. Qed.
 (* 
   Proof. repeat constructor; apply beq_nat_false; auto. Qed.
 *)
 
 Example test_nostutter_4:      not (nostutter [3;1;1;4]).
-Proof. exact GIVEUP. Qed.
+Proof. 
+  unfold not. intro c. inversion c. inversion H3. unfold not in H6. apply H6. reflexivity. Qed.  
+
 (* 
   Proof. intro.
   repeat match goal with 
