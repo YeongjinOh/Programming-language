@@ -42,6 +42,15 @@ Proof.
   simpl. rewrite <- minus_n_O. reflexivity.
 Qed.
 
+Lemma parity_ge_2_big : forall x,
+  parity x = parity (x + 2).
+intros. 
+  destruct x. reflexivity.
+  destruct x. reflexivity.
+  replace (S (S x)) with (S (S x) + 2 - 2).
+  replace (S (S x) + 2 - 2 + 2) with (S (S x) + 2).
+  apply parity_ge_2. omega. omega. omega. Qed.
+
 Lemma parity_lt_2 : forall x,
   ~ 2 <= x ->
   parity (x) = x.
@@ -57,6 +66,28 @@ Theorem parity_correct : forall m,
   END
     {{ fun st => st X = parity m }}.
 Proof.
-  exact GIVEUP.
+  intros m.
+  apply hoare_consequence_pre with (P':= (fun st => (parity (st X) = parity m))).
+  Case "{{I}} while {{Q}}".
+    eapply hoare_consequence_post. apply hoare_while.
+    SCase "{{I /\ b}} c {{I}}".
+      unfold hoare_triple. intros.
+      assert (Hle : 2 <= st X).
+        destruct H0. 
+        simpl in H1. destruct (st X) eqn:Hx. inversion H1.
+        destruct n eqn:Hn. inversion H1. omega.
+      inversion H; subst. simpl. unfold update. 
+      rewrite eq_id. rewrite parity_ge_2. apply H0. assumption.
+      
+    SCase "I/\~b ->> Q".
+      unfold hoare_triple, assert_implies. intros.
+      destruct H. rewrite<-H. symmetry.
+      apply parity_lt_2.
+      unfold not. intros.
+      simpl in H0. destruct (st X). inversion H1.
+      destruct n. inversion H1. inversion H3.
+      inversion H0.
+  Case "P ->> I".
+    unfold assert_implies. intros. rewrite H. omega.
 Qed.
 
